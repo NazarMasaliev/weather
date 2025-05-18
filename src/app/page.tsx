@@ -59,6 +59,7 @@ export default function LoginPage() {
         setError('Неверный логин или пароль')
       }
     } catch (err) {
+      console.error(err)
       setError('Ошибка подключения к серверу')
     } finally {
       setIsLoading(false)
@@ -72,7 +73,7 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Вход в систему
         </h1>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">

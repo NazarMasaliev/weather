@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 interface WeatherData {
   main: {
@@ -53,7 +54,8 @@ export default function WeatherPage() {
         setError('Ошибка получения данных о погоде')
       }
     } catch (err) {
-      setError('Ошибка подключения к сервису погоды')
+      console.error(err)
+      setError('Ошибка подключения к серверу')
     } finally {
       setIsLoading(false)
     }
@@ -114,21 +116,23 @@ export default function WeatherPage() {
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-6">
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
-                <img
+                <Image
                   src={getWeatherIcon(weatherData.weather[0].icon)}
                   alt={weatherData.weather[0].description}
                   className="w-20 h-20"
+                  width={80}
+                  height={80}
                 />
               </div>
-              
+
               <h2 className="text-4xl font-bold text-gray-800 mb-2">
                 {Math.round(weatherData.main.temp)}°C
               </h2>
-              
+
               <p className="text-xl text-gray-600 mb-4 capitalize">
                 {weatherData.weather[0].description}
               </p>
-              
+
               <div className="grid grid-cols-2 gap-4 mt-6">
                 <div className="bg-blue-50 rounded-lg p-4">
                   <div className="text-sm text-blue-600 font-medium">
@@ -138,7 +142,7 @@ export default function WeatherPage() {
                     {Math.round(weatherData.main.feels_like)}°C
                   </div>
                 </div>
-                
+
                 <div className="bg-green-50 rounded-lg p-4">
                   <div className="text-sm text-green-600 font-medium">
                     Влажность
@@ -148,7 +152,7 @@ export default function WeatherPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-purple-50 rounded-lg p-4 mt-4">
                 <div className="text-sm text-purple-600 font-medium">
                   Скорость ветра
